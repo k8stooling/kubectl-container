@@ -16,9 +16,6 @@ RUN apt-get update && apt-get upgrade -q -y \
 # Install Helm (installs to /usr/local/bin by default)
 RUN curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
-# Install uv (installs to /usr/local/bin by default)
-RUN curl -LsSf https://astral.sh/uv/install.sh | sh
-
 # Install kubectl
 RUN set -x; \
     KUBECTL_VERSION=$(curl -L -s https://dl.k8s.io/release/stable.txt); \
@@ -33,7 +30,6 @@ FROM gcr.io/distroless/cc-debian12
 
 # Copy the compiled binaries from the builder stage into the final image.
 COPY --from=builder /usr/local/bin/helm /usr/local/bin/helm
-COPY --from=builder /usr/local/bin/uv /usr/local/bin/uv
 COPY --from=builder /usr/local/bin/kubectl /usr/local/bin/kubectl
 
 # Set user and group to a non-root user (e.g., UID 1000, GID 1000).
