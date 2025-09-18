@@ -1,4 +1,4 @@
-FROM docker.io/debian:trixie-slim
+FROM docker.io/debian:bookworm-slim
 USER root
 
 RUN apt-get update && apt-get upgrade -q -y && apt install -y curl
