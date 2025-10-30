@@ -31,6 +31,7 @@ FROM gcr.io/distroless/cc-debian12
 # Copy the compiled binaries from the builder stage into the final image.
 COPY --from=builder /usr/local/bin/helm /usr/local/bin/helm
 COPY --from=builder /usr/local/bin/kubectl /usr/local/bin/kubectl
+COPY --from=builder /bin/sh /bin/sh
 
 # Set user and group to a non-root user (e.g., UID 1000, GID 1000).
 # Distroless images do not have useradd/groupadd, so we specify numeric IDs.
