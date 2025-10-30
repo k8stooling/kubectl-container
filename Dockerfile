@@ -10,7 +10,7 @@ USER root
 RUN apt-get update && apt-get upgrade -q -y \
     && apt-get install -y --no-install-recommends \
         curl \
-        ca-certificates \
+        ca-certificates busybox-static \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Helm (installs to /usr/local/bin by default)
@@ -32,6 +32,9 @@ FROM gcr.io/distroless/cc-debian12
 COPY --from=builder /usr/local/bin/helm /usr/local/bin/helm
 COPY --from=builder /usr/local/bin/kubectl /usr/local/bin/kubectl
 COPY --from=builder /bin/sh /bin/sh
+COPY --from=builder /bin/busybox /busybox
+RUN ["/busybox", "ln", "-s", "/busybox", "/usr/bin/which"]
+
 
 # Set user and group to a non-root user (e.g., UID 1000, GID 1000).
 # Distroless images do not have useradd/groupadd, so we specify numeric IDs.
