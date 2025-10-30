@@ -34,6 +34,7 @@ COPY --from=builder /usr/local/bin/kubectl /usr/local/bin/kubectl
 COPY --from=builder /bin/sh /bin/sh
 COPY --from=builder /bin/busybox /busybox
 RUN ["/busybox", "ln", "-s", "/busybox", "/usr/bin/which"]
+RUN ["/busybox", "ln", "-s", "/busybox", "/usr/bin/cp"]
 
 
 # Set user and group to a non-root user (e.g., UID 1000, GID 1000).
